@@ -60,6 +60,19 @@ Este projeto contém scripts SQL para configurar um banco de dados PostgreSQL de
 ```sql
 -- Lista todas as pessoas e os pets que adotaram
 -- Inclui pessoas que ainda não adotaram nenhum pet
+
+SELECT
+    p.nome AS nome_pessoa,
+    p.email AS email_pessoa,
+    a.data_adocao,
+    pt.nome AS nome_pet,
+    pt.raca AS raca_pet
+FROM
+    pessoas p
+LEFT JOIN -- Usamos LEFT JOIN para incluir pessoas que ainda não adotaram
+    adocoes a ON p.id = a.pessoa_id
+LEFT JOIN
+    pets pt ON a.pet_id = pt.id;
 ```
 - Utiliza LEFT JOIN para incluir pessoas sem adoções
 - Mostra nome da pessoa, email, data da adoção e dados do pet
@@ -68,6 +81,24 @@ Este projeto contém scripts SQL para configurar um banco de dados PostgreSQL de
 ```sql
 -- Busca uma pessoa específica e seus dados de endereço
 -- Requer substituição do UUID na cláusula WHERE
+
+SELECT
+    p.nome AS nome_pessoa,
+    p.email,
+    p.telefone,
+    p.data_nascimento,
+    e.logradouro,
+    e.numero,
+    e.bairro,
+    e.municipio,
+    e.cep,
+    e.estado
+FROM
+    pessoas p
+LEFT JOIN -- Usamos LEFT JOIN caso a pessoa não tenha um endereço cadastrado
+    enderecos e ON p.endereco_id = e.id
+WHERE
+    p.id = 'INSIRA_O_UUID_DA_PESSOA_AQUI'; -- Ex: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
 ```
 - Demonstra junção entre tabelas pessoas e endereços
 - Exemplo de consulta parametrizada
