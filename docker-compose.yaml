@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: adocao_postgres
+    restart: always
+    
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root" 
+      POSTGRES_DB: "adocao_db"  
+    ports:
+      - "5432:5432"
+  
+    volumes:
+      #    Este script será executado automaticamente na primeira inicialização
+      - ./scripts/init-database.sql:/docker-entrypoint-initdb.d/01-init-schema.sql
+
+      # 2. Mapeia o script de CARGA (executa em segundo)
+      - ./scripts/seed.sql:/docker-entrypoint-initdb.d/02-seed-data.sql
+      
+      #    Isso garante que seus dados não sejam perdidos se o contêiner parar
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local
