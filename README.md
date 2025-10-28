@@ -6,11 +6,23 @@ Este projeto contém scripts SQL para configurar um banco de dados PostgreSQL de
 
 ```
 ├── docker-compose.yaml     # Configuração do container PostgreSQL
+├── assets/
+│   ├── diagrama.drawio    # Diagrama do modelo de dados (abrir em diagrams.net)
+│   └── diagrama.pdf       # Diagrama do modelo de dados em PDF
 └── scripts/
     ├── init-database.sql   # Script de criação da estrutura do banco
     ├── seed.sql           # Script de carga inicial de dados de teste
     └── querys.sql         # Consultas SQL de exemplo
 ```
+
+## Modelo de Dados
+
+O diagrama do modelo de dados está disponível na pasta `assets/`:
+
+- **`diagrama.drawio`**: Arquivo editável do diagrama - pode ser visualizado e editado em [diagrams.net](https://diagrams.net)
+- **`diagrama.pdf`**: Versão em PDF do diagrama para visualização rápida
+
+O sistema implementa as seguintes entidades e relacionamentos:
 
 ## Descrição dos Scripts
 
@@ -133,8 +145,6 @@ docker exec -it adocao_postgres psql -U root -d adocao_db
 - **Banco:** adocao_db
 
 ## Modelo de Dados
-
-O sistema implementa as seguintes entidades e relacionamentos:
 
 - **Endereços** (1) ←→ (N) **Pessoas**
 - **Pessoas** (N) ←→ (N) **Pets** através da tabela **Adoções**
